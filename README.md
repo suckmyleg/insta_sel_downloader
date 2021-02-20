@@ -4,11 +4,33 @@ import hornybot
 
 bot = hornybot.BOT(username, password)
 
+bot.login(username="your_instagram_username_account", password="your_instagram_username_password")
+
 bot.get_stories("instagram_username")
 bot.get_highlights("instagram_username")
 bot.get_posts("instagram_username")
 
 bot.download("instagram_username")
+```
+
+# Login
+
+Login to save cookies
+```python
+import hornybot
+
+bot = hornybot.BOT(username, password)
+
+bot.login(username="your_instagram_username_account", password="your_instagram_username_password")
+```
+
+Load cookies
+```python
+import hornybot
+
+bot = hornybot.BOT(username, password)
+
+bot.load_session()
 ```
 
 # Get data
