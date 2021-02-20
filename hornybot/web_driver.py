@@ -7,7 +7,6 @@ import random
 import wget
 import os
 from webdriver_manager.chrome import ChromeDriverManager
-import pickle
 
 class DRIVER:
 	def open_web(self, options=False):

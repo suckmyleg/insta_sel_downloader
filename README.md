@@ -1,3 +1,9 @@
+# Install needed modules
+
+```python
+pip install -r requirements.txt
+```
+
 # How to use
 ```python
 import hornybot
