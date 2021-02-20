@@ -1,3 +1,6 @@
+# About
+Download stories, posts and highlights from instagram accounts.
+
 # Install needed modules
 
 ```python
