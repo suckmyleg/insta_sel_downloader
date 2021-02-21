@@ -313,18 +313,10 @@ class DRIVER:
 		keys = ['//*[@id="react-root"]/section/div[1]/div/div[5]/section/div/button[2]/div',
 		'//*[@id="react-root"]/section/div[1]/div/div[5]/section/div/button/div',
 		'/html/body/div[1]/section/div/div/section/div[2]/button[2]/div',
-		'//*[@id="react-root"]/section/div[1]/div/section/div/button/div',
-		'//*[@id="react-root"]/section/div[1]/div/section/div/button[2]/div',
 		'//*[@id="react-root"]/section/div/div/section/div[2]/button[2]/div',
+		'//*[@id="react-root"]/section/div[1]/div/section/div/button[2]/div',
 		'/html/body/div[1]/section/div/div/section/div[2]/button[2]',
-		'/section/div[2]/button[2]/div',
-		'//*[@id="react-root"]/section/div[1]/div/section/div[1]/button/div',
-		'//*[@id="react-root"]/section/div[1]/div/section/div/button[1]/div',
-		'//*[@id="react-root"]/section/div[1]/div/section/div/button/div[1]',
-		'//*[@id="react-root"]/section/div/div/section/div/button/div',
-		'//*[@id="react-root"]/section/div/div/section/div/button/div[1]',
-		'//*[@id="react-root"]/section/div/div/section/div/button[1]/div',
-		'//*[@id="react-root"]/section/div/div/section/div[1]/button/div'
+		'/section/div[2]/button[2]/div'
 		]
 
 		nextButton = self.find_element_by_xpath(keys)
@@ -344,8 +336,8 @@ class DRIVER:
 
 	def get_urls_from_web(self, username, log=True, type="Uknown", mode="story"):
 		try:
-			nextButton = self.try_function(self.get_next_button, 2)
-			self.ti(1)
+			nextButton = self.try_function(self.get_next_button, 1)
+			self.ti(0.5)
 			if log:
 				self.say("Getting urls from {}s".format(mode))
 			nn = 0
@@ -353,48 +345,35 @@ class DRIVER:
 			last_url = ""
 			while True:
 				try:
-					url = ""
+					if mode == "story":
+						r = self.try_function(self.get_content, 1)
+					else:
+						r = self.try_function(self.get_post, 1)
 
-					i = 0
-					while url == "":
-						time.sleep(0.2)
-						if i == 5:
+					url = r[0]
+
+					if r:
+						if url == last_url:
+							cloned_url += 1
+						else:
+							cloned_url = 0
+							last_url = url
+
+						if cloned_url == 3:
 							break
 
-						if mode == "story":
-							r = self.try_function(self.get_content, 2)
-						else:
-							r = self.try_function(self.get_post, 2)
+						media_type = r[1]
 
-						if r:
-							if url == last_url:
-								cloned_url += 1
-							else:
-								cloned_url = 0
-								last_url = url
-
-							if cloned_url == 3:
-								break
-
-							url = r[0]
-
-							media_type = r[1]
-
-							if not url:
-								url = ""
-						i += 1
+						self.add_story(username, url, type, media_type)
 					
-					self.add_story(username, url, type, media_type)
 					nn += 1
 
-					if nextButton:
-						self.try_function(nextButton.click, 1, returnn=False)
-					else:
-						break
+					nextButton = self.try_function(self.get_next_button, 1)
 
-					nextButton = self.try_function(self.get_next_button, 2)
+					self.try_function(nextButton.click, 1, returnn=False)
+
+					nextButton = self.try_function(self.get_next_button, 1)
 				except Exception as e:
-					self.say(e)
 					break
 
 			if nn > 0:
