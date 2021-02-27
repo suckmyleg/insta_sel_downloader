@@ -7,6 +7,7 @@ import random
 import wget
 import os
 from webdriver_manager.chrome import ChromeDriverManager
+import pickle
 
 class DRIVER:
 	def open_web(self, options=False):
@@ -501,7 +502,25 @@ class DRIVER:
 		else:
 			print("You need to log in to an account to use get_stories")
 
-	def download(self, username):
+	def decrypt(self, path, encrypt):
+		file_content = open(path, "rb").read()
+		try:
+			encrypted = encrypt.decrypt(file_content)
+		except:
+			pass
+		else:
+			open(path, "wb").write(encrypted)
+
+	def encrypt(self, path, encrypt):
+		file_content = open(path, "rb").read()
+		try:
+			encrypted = encrypt.encrypt(file_content)
+		except:
+			pass
+		else:
+			open(path, "wb").write(encrypted)
+
+	def download(self, username, encrypt=False):
 		try:
 			ll = len(self.get_data_from_instagram(username)["urls"])
 		except:
@@ -534,6 +553,10 @@ class DRIVER:
 				if not os.path.exists(path):
 					try:
 						wget.download(url, path)
+						
+						if encrypt:
+							self.encrypt(path, encrypt)
+
 					except Exception as e:
 						print(e)
 
