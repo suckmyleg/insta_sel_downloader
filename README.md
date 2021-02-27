@@ -1,5 +1,5 @@
 # About
-Download stories, posts and highlights from instagram accounts.
+Download stories, posts and highlights from instagram account with selenium.
 
 # Install needed modules
 
