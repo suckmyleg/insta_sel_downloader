@@ -28,7 +28,7 @@ Login to save cookies
 ```python
 import hornybot
 
-bot = hornybot.BOT(username, password)
+bot = hornybot.BOT()
 
 bot.login(username="your_instagram_username_account", password="your_instagram_username_password")
 ```
