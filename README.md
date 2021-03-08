@@ -37,7 +37,7 @@ Load cookies
 ```python
 import hornybot
 
-bot = hornybot.BOT(username, password)
+bot = hornybot.BOT()
 
 bot.load_session()
 ```
