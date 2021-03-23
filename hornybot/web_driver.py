@@ -526,6 +526,8 @@ class DRIVER:
 		except:
 			return False
 
+		files = []
+
 		o = 0
 		for i in self.get_data_from_instagram(username)["urls"]:
 			o += 1
@@ -550,6 +552,8 @@ class DRIVER:
 
 				path = username + "/" + str(os.path.basename(fileinfo.path))
 
+				files.append(path)
+
 				if not os.path.exists(path):
 					try:
 						wget.download(url, path)
@@ -565,6 +569,8 @@ class DRIVER:
 			except Exception as e:
 				print(e)
 			time.sleep(0.01)
+
+		return files
 
 	def __init__(self, username=False, email=False, password=False, cookies=[], auto_load=False, options=False, auto_open_web=True):
 		self.username = username
