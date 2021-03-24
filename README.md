@@ -3,7 +3,7 @@ Download stories, posts and highlights from instagram account with selenium.
 
 # Install needed modules
 
-```python
+```cmd
 pip install -r requirements.txt
 ```
 
